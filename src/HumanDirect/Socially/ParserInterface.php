@@ -111,4 +111,13 @@ interface ParserInterface
         self::PLATFORM_REDDIT => self::REDDIT_URL_REGEXS,
         self::PLATFORM_QUORA => self::QUORA_URL_REGEXS,
     ];
+
+    /**
+     * Returns true if the supplied URL is a valid social media profile URL
+     *
+     * @param string $url
+     *
+     * @return bool
+     */
+    public function isSocialMediaProfile(string $url): bool;
 }

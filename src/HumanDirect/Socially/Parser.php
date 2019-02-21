@@ -8,11 +8,7 @@ namespace HumanDirect\Socially;
 class Parser implements ParserInterface
 {
     /**
-     * Returns true if the supplied URL is a valid social media profile URL
-     *
-     * @param string $url
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function isSocialMediaProfile(string $url): bool
     {
