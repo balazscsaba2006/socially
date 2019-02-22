@@ -180,6 +180,7 @@ class ParserTest extends TestCase
             ['https://plus.google.com/106924247729881790951/ABOUT', 'https://plus.google.com/106924247729881790951/about'],
             ['https://stackoverflow.com/users/509414/balazscsaba2006', 'https://stackoverflow.com/users/509414/balazscsaba2006'],
             ['http://careers.stackoverflow.com/balazscsaba2006/', 'https://careers.stackoverflow.com/balazscsaba2006'],
+            ['http://some-unsupported-platform.com/', 'http://some-unsupported-platform.com/'],
         ];
     }
 }

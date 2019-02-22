@@ -36,7 +36,13 @@ class Parser implements ParserInterface
             $this->loadNormalizers();
         }
 
-        $normalizer = $this->getNormalizer($this->identifyPlatform($url));
+        try {
+            $platform = $this->identifyPlatform($url);
+        } catch (NotSupportedException | \Exception $e) {
+            return $url;
+        }
+
+        $normalizer = $this->getNormalizer($platform);
 
         return $normalizer->normalize($url);
     }
