@@ -22,9 +22,9 @@ namespace {
     /**
      * @param string $url
      *
-     * @return bool
+     * @return string
      */
-    function socially_normalize(string $url): bool
+    function socially_normalize(string $url): string
     {
         static $parser = null;
 
