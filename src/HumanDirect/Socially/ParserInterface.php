@@ -5,7 +5,7 @@ namespace HumanDirect\Socially;
 /**
  * Interface ParserInterface.
  */
-interface ParserInterface
+interface ParserInterface extends NormalizableInterface
 {
     public const PLATFORM_FACEBOOK = 'facebook';
     public const PLATFORM_TWITTER = 'twitter';
@@ -19,7 +19,7 @@ interface ParserInterface
     public const PLATFORM_BITBUCKET = 'bitbucket';
     public const PLATFORM_DRIBBBLE = 'dribbble';
     public const PLATFORM_FLICKR = 'flickr';
-    public const PLATFORM_GOOGLEPLUS = 'googleplus';
+    public const PLATFORM_GOOGLEPLUS = 'google_plus';
     public const PLATFORM_STACKOVERFLOW = 'stackoverflow';
     public const PLATFORM_REDDIT = 'reddit';
     public const PLATFORM_QUORA = 'quora';
@@ -33,11 +33,9 @@ interface ParserInterface
     ];
 
     public const LINKEDIN_URL_REGEXS = [
-        // private
+        'http(s)?://([\w]+\.)?linkedin\.com/profile/view\?id=[A-z0-9_-]+',
         'http(s)?://([\w]+\.)?linkedin\.com/in/[A-z0-9_-]+/?',
         'http(s)?://([\w]+\.)?linkedin\.com/pub/[A-z0-9_-]+(\/[A-z 0-9]+){3}/?',
-        // companies
-        'http(s)?://(www\.)?linkedin\.com/company/[A-z0-9_-]+/?',
     ];
 
     public const TWITTER_URL_REGEXS = [
@@ -82,7 +80,7 @@ interface ParserInterface
 
     public const STACKOVERFLOW_URL_REGEXS = [
         'http(s)?://(www\.)?stackoverflow\.com/users/\d+/?',
-        'http(s)?://careers.stackoverflow\.com/[A-z0-9-]+/?',
+        'careers' => 'http(s)?://careers.stackoverflow\.com/[A-z0-9-]+/?',
     ];
 
     public const REDDIT_URL_REGEXS = [
@@ -113,6 +111,17 @@ interface ParserInterface
     ];
 
     /**
+     * Parse URL to parts
+     *
+     * @param string $url
+     *
+     * @return ResultInterface
+     *
+     * @throws NotSupportedException
+     */
+    public function parse(string $url): ResultInterface;
+
+    /**
      * Returns true if the supplied URL is a valid social media profile URL
      *
      * @param string $url
@@ -120,4 +129,28 @@ interface ParserInterface
      * @return bool
      */
     public function isSocialMediaProfile(string $url): bool;
+
+    /**
+     * Identifies matched platform.
+     *
+     * Returned string can be for eg. facebook, or stackoverflow.careers
+     *
+     * @param string $url
+     *
+     * @return string
+     *
+     * @throws NotSupportedException
+     */
+    public function identifyPlatform(string $url): string;
+
+    /**
+     * Normalize a URL.
+     *
+     * @param string $url
+     *
+     * @return string
+     *
+     * @throws NotSupportedException
+     */
+    public function normalize(string $url): string;
 }

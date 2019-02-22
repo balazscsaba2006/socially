@@ -18,4 +18,20 @@ namespace {
 
         return $parser->isSocialMediaProfile($url);
     }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    function socially_normalize(string $url): bool
+    {
+        static $parser = null;
+
+        if (null === $parser) {
+            $parser = Factory::createParser();
+        }
+
+        return $parser->normalize($url);
+    }
 }

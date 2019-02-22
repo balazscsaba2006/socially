@@ -29,4 +29,25 @@ class StaticTest extends TestCase
         // use the exact same provider as for the ParserTest
         return call_user_func([ParserTest::class, 'getIsSocialMediaProfileUrls']);
     }
+
+    /**
+     * @dataProvider getNormalizeUrls
+     *
+     * @param string $url
+     * @param bool   $expected
+     */
+    public function testSociallyNormalize(string $url, bool $expected): void
+    {
+        $result = socially_normalize($url);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function getNormalizeUrls(): array
+    {
+        // use the exact same provider as for the ParserTest
+        return call_user_func([ParserTest::class, 'getNormalizeUrls']);
+    }
 }

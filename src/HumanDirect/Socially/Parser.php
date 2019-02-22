@@ -2,58 +2,123 @@
 
 namespace HumanDirect\Socially;
 
+use HumanDirect\Socially\Normalizer\DefaultNormalizer;
+use HumanDirect\Socially\Normalizer\NormalizerInterface;
+
 /**
  * Class Parser.
  */
 class Parser implements ParserInterface
 {
     /**
+     * @var NormalizerInterface[]
+     */
+    private $normalizers;
+
+    /**
+     * @inheritdoc
+     */
+    public function parse(string $url): ResultInterface
+    {
+        if (!$this->isSocialMediaProfile($url)) {
+            throw new NotSupportedException('Supplied URL is not a social media profile URL.');
+        }
+
+        return Result::createFromUrl($url);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function normalize(string $url): string
+    {
+        if (null === $this->normalizers) {
+            $this->loadNormalizers();
+        }
+
+        $normalizer = $this->getNormalizer($this->identifyPlatform($url));
+
+        return $normalizer->normalize($url);
+    }
+
+    /**
      * @inheritdoc
      */
     public function isSocialMediaProfile(string $url): bool
     {
-        if (!$this->isValidUrl($url)) {
+        if (!Util::isValidUrl($url)) {
             return false;
         }
 
+        try {
+            $this->identifyPlatform($url);
+        } catch (NotSupportedException | \Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function identifyPlatform(string $url): string
+    {
         foreach (self::SOCIAL_MEDIA_PATTERNS as $platform => $regex) {
-            foreach ($regex as $pattern) {
+            foreach ($regex as $prefix => $pattern) {
                 if (preg_match('#'.$pattern.'#i', $url)) {
-                    return true;
+                    return \is_string($prefix) ? sprintf('%s.%s', $platform, $prefix) : $platform;
                 }
             }
         }
 
-        return false;
+        throw new NotSupportedException('Could not identify platform for URL.');
     }
 
     /**
-     * Validates if supplied URL is valid and not an IP address
-     *
-     * @param string $url
-     *
-     * @return bool
+     * Load normalizers.
      */
-    private function isValidUrl(string $url): bool
+    private function loadNormalizers(): void
     {
-        $cleaned = $this->cleanUrl($url);
-        if (!filter_var($cleaned, FILTER_VALIDATE_URL)) {
-            return $url;
+        $normalizerNS = '\\HumanDirect\\Socially\\Normalizer\\';
+        $directory = new \RecursiveDirectoryIterator(
+            __DIR__ . '/Normalizer',
+            \RecursiveDirectoryIterator::SKIP_DOTS
+        );
+        $files = new \RecursiveCallbackFilterIterator($directory, function ($current, $key, $iterator) use ($normalizerNS) {
+            $className = str_replace('.php', '', $current->getFilename());
+            $isNormalizer = 'Normalizer' === substr($className, -10);
+
+            if (!$isNormalizer || $current->isDir() || $iterator->hasChildren()) {
+                return false;
+            }
+
+            $r = new \ReflectionClass($normalizerNS . $className);
+
+            return $r->isInstantiable();
+        });
+
+        foreach ($files as $file) {
+            $className = $normalizerNS . str_replace('.php', '', $file->getFilename());
+            $this->normalizers[] = new $className;
+        }
+    }
+
+    /**
+     * Get a normalizer for a specific platform or a default normalizer
+     *
+     * @param string $platform
+     *
+     * @return NormalizerInterface
+     */
+    private function getNormalizer(string $platform): NormalizerInterface
+    {
+        foreach ($this->normalizers as $normalizer) {
+            if ($normalizer->supports($platform)) {
+                return $normalizer;
+            }
         }
 
-        $tldExtractor = Factory::createTldExtractor();
-        $result = $tldExtractor->parse($cleaned);
-
-        return $result->isValidDomain();
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
-    private function cleanUrl(string $url): string
-    {
-        return strtolower(trim($url));
+        return new DefaultNormalizer();
     }
 }
