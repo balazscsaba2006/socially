@@ -117,7 +117,7 @@ class ResultTest extends TestCase
 
         static::assertEquals('github.com', $result->getFullHost());
         static::assertEquals(null, $result->getSubdomain());
-        static::assertEquals(array(), $result->getSubdomains());
+        static::assertEquals([], $result->getSubdomains());
         static::assertEquals('github.com', $result->getRegistrableDomain());
         static::assertTrue($result->isValidDomain());
         static::assertFalse($result->isIp());

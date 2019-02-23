@@ -3,7 +3,7 @@
 namespace HumanDirect\Socially;
 
 /**
- * Class Util
+ * Class Util.
  */
 class Util
 {
@@ -18,7 +18,7 @@ class Util
     }
 
     /**
-     * Validates if supplied URL is valid and not an IP address
+     * Validates if supplied URL is valid and not an IP address.
      *
      * @param string $url
      *

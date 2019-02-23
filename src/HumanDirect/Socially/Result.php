@@ -152,7 +152,7 @@ class Result implements \ArrayAccess, ResultInterface
      */
     public function __toString(): string
     {
-        return (string)$this->tldResult;
+        return (string) $this->tldResult;
     }
 
     /**
@@ -214,8 +214,8 @@ class Result implements \ArrayAccess, ResultInterface
     /**
      * Magic method, makes params read-only.
      *
-     * @param string $name Name of params to retrieve
-     * @param mixed $value Value to set
+     * @param string $name  Name of params to retrieve
+     * @param mixed  $value Value to set
      *
      * @throws \LogicException
      *
@@ -230,7 +230,7 @@ class Result implements \ArrayAccess, ResultInterface
      * Disables assigns a value to the specified offset.
      *
      * @param mixed $offset The offset to assign the value to
-     * @param mixed $value Value to set
+     * @param mixed $value  Value to set
      *
      * @throws \LogicException
      *

@@ -106,7 +106,7 @@ class Parser implements ParserInterface
 
         foreach ($files as $file) {
             $className = $normalizerNS . str_replace('.php', '', $file->getFilename());
-            $this->normalizers[] = new $className;
+            $this->normalizers[] = new $className();
         }
     }
 

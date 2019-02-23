@@ -25,7 +25,7 @@ interface ResultInterface extends \ArrayAccess
      *
      * @return ResultInterface
      */
-    public static function create(?string $subdomain, ?string $hostname, ?string $suffix): ResultInterface;
+    public static function create(?string $subdomain, ?string $hostname, ?string $suffix): self;
 
     /**
      * Returns subdomain if it exists.
