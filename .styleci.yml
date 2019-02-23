@@ -2,7 +2,6 @@ preset: recommended
 
 enabled:
     - concat_with_spaces
-    - no_spaces_after_function_name
     - yoda_style
 
 disabled:
