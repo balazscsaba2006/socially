@@ -10,9 +10,9 @@ interface SupportsNormalizerInterface
     /**
      * Does normalizer support platform?
      *
-     * @param string|null $platform
+     * @param string $platform
      *
      * @return bool
      */
-    public function supports(string $platform = null): bool;
+    public function supports(string $platform): bool;
 }

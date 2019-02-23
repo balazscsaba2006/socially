@@ -20,9 +20,9 @@ class Factory
     }
 
     /**
-     * @return Extract
-     *
      * @throws \LayerShifter\TLDExtract\Exceptions\RuntimeException
+     *
+     * @return Extract
      */
     public static function createTldExtractor(): Extract
     {

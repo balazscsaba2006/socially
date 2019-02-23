@@ -8,9 +8,9 @@ namespace HumanDirect\Socially\Normalizer;
 class GooglePlusNormalizer extends DefaultNormalizer
 {
     /**
-     * For Google Plus site allow subdomain
+     * For Google Plus site allow subdomain.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function afterNormalization(string $url): string
     {

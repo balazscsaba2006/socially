@@ -22,7 +22,9 @@ Currently supported social media platforms:
 ## Requirements
 
 - [PHP](https://secure.php.net/): >= 7.1
-- PHP extension **mbstring**
+- PHP extensions:
+  * mbstring
+  * json
 - [layershifter/tld-extract](https://github.com/layershifter/TLDExtract): ^2.0
 
 ## Installation

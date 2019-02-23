@@ -35,6 +35,7 @@
   "require": {
     "php": ">=7.1",
     "ext-mbstring": "*",
+    "ext-json": "*",
     "layershifter/tld-extract": "^2.0"
   },
   "require-dev": {

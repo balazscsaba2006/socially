@@ -5,7 +5,7 @@ namespace HumanDirect\Socially;
 use LayerShifter\TLDExtract\ResultInterface as TldResultInterface;
 
 /**
- * Class Result
+ * Class Result.
  */
 class Result implements \ArrayAccess, ResultInterface
 {
@@ -43,8 +43,9 @@ class Result implements \ArrayAccess, ResultInterface
      *
      * @param string $url
      *
-     * @return ResultInterface
      * @throws SociallyException
+     *
+     * @return ResultInterface
      */
     public static function createFromUrl(string $url): ResultInterface
     {

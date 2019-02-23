@@ -16,7 +16,7 @@ class Parser implements ParserInterface
     private $normalizers;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function parse(string $url): ResultInterface
     {
@@ -28,7 +28,7 @@ class Parser implements ParserInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function normalize(string $url): string
     {
@@ -48,7 +48,7 @@ class Parser implements ParserInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isSocialMediaProfile(string $url): bool
     {
@@ -66,13 +66,13 @@ class Parser implements ParserInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function identifyPlatform(string $url): string
     {
         foreach (self::SOCIAL_MEDIA_PATTERNS as $platform => $regex) {
             foreach ($regex as $prefix => $pattern) {
-                if (preg_match('#'.$pattern.'#i', rawurldecode($url))) {
+                if (preg_match('#' . $pattern . '#i', rawurldecode($url))) {
                     return \is_string($prefix) ? sprintf('%s.%s', $platform, $prefix) : $platform;
                 }
             }
@@ -91,7 +91,7 @@ class Parser implements ParserInterface
             __DIR__ . '/Normalizer',
             \RecursiveDirectoryIterator::SKIP_DOTS
         );
-        $files = new \RecursiveCallbackFilterIterator($directory, function ($current, $key, $iterator) use ($normalizerNS) {
+        $files = new \RecursiveCallbackFilterIterator($directory, function($current, $key, $iterator) use ($normalizerNS) {
             $className = str_replace('.php', '', $current->getFilename());
             $isNormalizer = 'Normalizer' === substr($className, -10);
 
@@ -111,7 +111,7 @@ class Parser implements ParserInterface
     }
 
     /**
-     * Get a normalizer for a specific platform or a default normalizer
+     * Get a normalizer for a specific platform or a default normalizer.
      *
      * @param string $platform
      *

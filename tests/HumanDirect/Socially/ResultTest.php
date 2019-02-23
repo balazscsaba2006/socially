@@ -56,11 +56,14 @@ class ResultTest extends TestCase
 
         unset($entity);
 
-        $entity = new Result(new TldResult('www', 'domain', 'com'));
+        $entity = new Result(new TldResult('www.news', 'domain', 'com'));
 
-        static::assertEquals('www', $entity->subdomain);
+        static::assertEquals('www.news', $entity->subdomain);
+        static::assertEquals(['www', 'news'], $entity->getSubdomains());
         static::assertEquals('domain', $entity->hostname);
         static::assertEquals('com', $entity->suffix);
+        static::assertEquals('www.news.domain.com', $entity->getFullHost());
+        static::assertEquals('domain.com', $entity->getRegistrableDomain());
 
         static::assertArrayHasKey('subdomain', $entity);
         static::assertArrayHasKey('hostname', $entity);

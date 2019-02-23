@@ -27,7 +27,7 @@ class DefaultNormalizer implements NormalizerInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function afterNormalization(string $url): string
     {
@@ -39,24 +39,21 @@ class DefaultNormalizer implements NormalizerInterface
             return $url;
         }
 
-        return str_replace($subdomain.'.', '', $url);
+        return str_replace($subdomain . '.', '', $url);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function supports(string $platform = null): bool
+    public function supports(string $platform): bool
     {
-        if (null === $platform) {
-            return false;
-        }
-
         return $this->getName() === Util::toCamelCase($platform);
     }
 
     /**
-     * @return string
      * @throws \ReflectionException
+     *
+     * @return string
      */
     protected function getName(): string
     {

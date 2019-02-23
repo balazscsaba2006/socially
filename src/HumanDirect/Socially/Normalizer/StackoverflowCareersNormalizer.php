@@ -8,9 +8,9 @@ namespace HumanDirect\Socially\Normalizer;
 class StackoverflowCareersNormalizer extends DefaultNormalizer
 {
     /**
-     * For Stackoverflow Careers site allow subdomain
+     * For Stackoverflow Careers site allow subdomain.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function afterNormalization(string $url): string
     {

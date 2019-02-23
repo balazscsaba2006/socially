@@ -111,18 +111,18 @@ interface ParserInterface extends NormalizableInterface
     ];
 
     /**
-     * Parse URL to parts
+     * Parse URL to parts.
      *
      * @param string $url
      *
-     * @return ResultInterface
-     *
      * @throws NotSupportedException
+     *
+     * @return ResultInterface
      */
     public function parse(string $url): ResultInterface;
 
     /**
-     * Returns true if the supplied URL is a valid social media profile URL
+     * Returns true if the supplied URL is a valid social media profile URL.
      *
      * @param string $url
      *
@@ -137,9 +137,9 @@ interface ParserInterface extends NormalizableInterface
      *
      * @param string $url
      *
-     * @return string
-     *
      * @throws NotSupportedException
+     *
+     * @return string
      */
     public function identifyPlatform(string $url): string;
 
@@ -148,9 +148,9 @@ interface ParserInterface extends NormalizableInterface
      *
      * @param string $url
      *
-     * @return string
-     *
      * @throws NotSupportedException
+     *
+     * @return string
      */
     public function normalize(string $url): string;
 }

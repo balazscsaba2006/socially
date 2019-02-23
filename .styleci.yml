@@ -1,7 +1,6 @@
 preset: recommended
 
 enabled:
-    - align_equals
     - concat_with_spaces
     - not_operator_with_space
 
