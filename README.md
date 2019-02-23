@@ -1,3 +1,5 @@
+[![GitHub tag](https://img.shields.io/github/tag/balazscsaba2006/socially.svg)](https://github.com/balazscsaba2006/socially/tags) * [![Build Status](https://travis-ci.org/balazscsaba2006/socially.svg?branch=master)](https://travis-ci.org/balazscsaba2006/socially) * [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/balazscsaba2006/socially/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/balazscsaba2006/socially/?branch=master) * [![StyleCI Badge](https://styleci.io/repos/171828152/shield)](https://styleci.io/repos/171828152/)
+
 # Socially
 Library to validate and parse social media profile URLs.
 
