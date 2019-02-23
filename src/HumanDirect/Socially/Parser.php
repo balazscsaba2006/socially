@@ -91,7 +91,7 @@ class Parser implements ParserInterface
             __DIR__ . '/Normalizer',
             \RecursiveDirectoryIterator::SKIP_DOTS
         );
-        $files = new \RecursiveCallbackFilterIterator($directory, function($current, $key, $iterator) use ($normalizerNS) {
+        $files = new \RecursiveCallbackFilterIterator($directory, function ($current, $key, $iterator) use ($normalizerNS) {
             $className = str_replace('.php', '', $current->getFilename());
             $isNormalizer = 'Normalizer' === substr($className, -10);
 
