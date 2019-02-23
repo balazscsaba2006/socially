@@ -34,9 +34,9 @@ class StaticTest extends TestCase
      * @dataProvider getNormalizeUrls
      *
      * @param string $url
-     * @param bool   $expected
+     * @param string $expected
      */
-    public function testSociallyNormalize(string $url, bool $expected): void
+    public function testSociallyNormalize(string $url, string $expected): void
     {
         $result = socially_normalize($url);
         $this->assertEquals($expected, $result);

@@ -181,6 +181,9 @@ class ParserTest extends TestCase
             ['https://stackoverflow.com/users/509414/balazscsaba2006', 'https://stackoverflow.com/users/509414/balazscsaba2006'],
             ['http://careers.stackoverflow.com/balazscsaba2006/', 'https://careers.stackoverflow.com/balazscsaba2006'],
             ['http://some-unsupported-platform.com/', 'http://some-unsupported-platform.com/'],
+            ['https://ro.linkedin.com/pub/ciprian-cetera%C8%99/53/24b/481', 'https://linkedin.com/pub/ciprian-ceteraș/53/24b/481'],
+            ['https://ro.linkedin.com/pub/ciprian-ceteraș/53/24b/481', 'https://linkedin.com/pub/ciprian-ceteraș/53/24b/481'],
+            ['https://ro.linkedin.com/in/ciprian-ceteraș/', 'https://linkedin.com/in/ciprian-ceteraș'],
         ];
     }
 }

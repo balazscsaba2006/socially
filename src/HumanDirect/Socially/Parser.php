@@ -72,7 +72,7 @@ class Parser implements ParserInterface
     {
         foreach (self::SOCIAL_MEDIA_PATTERNS as $platform => $regex) {
             foreach ($regex as $prefix => $pattern) {
-                if (preg_match('#'.$pattern.'#i', $url)) {
+                if (preg_match('#'.$pattern.'#i', rawurldecode($url))) {
                     return \is_string($prefix) ? sprintf('%s.%s', $platform, $prefix) : $platform;
                 }
             }

@@ -28,7 +28,7 @@ class Util
     {
         $cleaned = self::cleanUrl($url);
         if (!filter_var($cleaned, FILTER_VALIDATE_URL)) {
-            return $url;
+            return false;
         }
 
         $result = Result::createFromUrl($cleaned);
@@ -43,6 +43,6 @@ class Util
      */
     public static function cleanUrl(string $url): string
     {
-        return strtolower(trim($url));
+        return mb_strtolower(trim($url));
     }
 }

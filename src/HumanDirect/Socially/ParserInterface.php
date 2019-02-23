@@ -29,13 +29,13 @@ interface ParserInterface extends NormalizableInterface
     ];
 
     public const GITHUB_URL_REGEXS = [
-        'http(s)?://(www\.)?github\.com/[A-z0-9_-]+/?',
+        'http(s)?://(www\.)?github\.com/[A-z0-9_\-]+/?',
     ];
 
     public const LINKEDIN_URL_REGEXS = [
-        'http(s)?://([\w]+\.)?linkedin\.com/profile/view\?id=[A-z0-9_-]+',
-        'http(s)?://([\w]+\.)?linkedin\.com/in/[A-z0-9_-]+/?',
-        'http(s)?://([\w]+\.)?linkedin\.com/pub/[A-z0-9_-]+(\/[A-z 0-9]+){3}/?',
+        'http(s)?://([\w]+\.)?linkedin\.com/profile/view\?id=[A-z0-9_\-]+',
+        'http(s)?:\/\/([\w]+\.)?linkedin\.com\/in\/[\x00A0-\xD7FF\xF900-\xFDCF\xFDF0-\xFFEF\-\%]+\/?',
+        'http(s)?:\/\/([\w]+\.)?linkedin\.com\/pub\/[\x00A0-\xD7FF\xF900-\xFDCF\xFDF0-\xFFEF\-\%]+(\/[A-z0-9]+){3}\/?'
     ];
 
     public const TWITTER_URL_REGEXS = [
@@ -47,7 +47,7 @@ interface ParserInterface extends NormalizableInterface
     ];
 
     public const GRAVATAR_URL_REGEXS = [
-        'http(s)?://([\w]+\.)?gravatar\.com\/[A-z0-9-]+/?',
+        'http(s)?://([\w]+\.)?gravatar\.com\/[A-z0-9\-]+/?',
     ];
 
     public const KLOUT_URL_REGEXS = [
@@ -59,7 +59,7 @@ interface ParserInterface extends NormalizableInterface
     ];
 
     public const BEHANCE_URL_REGEXS = [
-        'http(s)?://(www\.)?behance\.net/[A-z0-9_-]+/?',
+        'http(s)?://(www\.)?behance\.net/[A-z0-9_\-]+/?',
     ];
 
     public const BITBUCKET_URL_REGEXS = [
@@ -80,15 +80,15 @@ interface ParserInterface extends NormalizableInterface
 
     public const STACKOVERFLOW_URL_REGEXS = [
         'http(s)?://(www\.)?stackoverflow\.com/users/\d+/?',
-        'careers' => 'http(s)?://careers.stackoverflow\.com/[A-z0-9-]+/?',
+        'careers' => 'http(s)?://careers.stackoverflow\.com/[A-z0-9\-]+/?',
     ];
 
     public const REDDIT_URL_REGEXS = [
-        'http(s)?://(www\.)?reddit\.com/user/[A-z0-9-]{3,20}/?',
+        'http(s)?://(www\.)?reddit\.com/user/[A-z0-9\-]{3,20}/?',
     ];
 
     public const QUORA_URL_REGEXS = [
-        'http(s)?://(www\.)?quora\.com/[A-z0-9-]+/?',
+        'http(s)?://(www\.)?quora\.com/[A-z0-9\-]+/?',
     ];
 
     public const SOCIAL_MEDIA_PATTERNS = [

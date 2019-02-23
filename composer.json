@@ -10,8 +10,18 @@
     "github",
     "twitter",
     "google plus",
-    "wordpress",
-    "pinterest"
+    "pinterest",
+    "facebook",
+    "angel",
+    "gravatar",
+    "klout",
+    "behance",
+    "bitbucket",
+    "dribbble",
+    "flickr",
+    "stackoverflow",
+    "reddit",
+    "quora"
   ],
   "homepage": "https://github.com/balazscsaba2006/socially",
   "license": "MIT",
@@ -24,6 +34,7 @@
   ],
   "require": {
     "php": ">=7.1",
+    "ext-mbstring": "*",
     "layershifter/tld-extract": "^2.0"
   },
   "require-dev": {

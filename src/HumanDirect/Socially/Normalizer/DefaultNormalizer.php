@@ -19,6 +19,7 @@ class DefaultNormalizer implements NormalizerInterface
      */
     public function normalize(string $url): string
     {
+        $url = rawurldecode($url);
         $url = $this->cleanUrl($url);
         $url = str_replace('http://', 'https://', $url);
 
@@ -46,6 +47,10 @@ class DefaultNormalizer implements NormalizerInterface
      */
     public function supports(string $platform = null): bool
     {
+        if (null === $platform) {
+            return false;
+        }
+
         return $this->getName() === Util::toCamelCase($platform);
     }
 
