@@ -2,7 +2,6 @@ preset: recommended
 
 enabled:
     - concat_with_spaces
-    - unalign_equals
     - no_spaces_after_function_name
     - no_spaces_inside_parenthesis
     - yoda_style
