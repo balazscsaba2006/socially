@@ -54,7 +54,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 ```php
 $parser = = new Parser();
-$result = $this->parser->isSocialMediaProfile($url);
+$result = $parser->isSocialMediaProfile($url);
 ```
 
 For more examples on usage take a look at the `/tests` directory.
