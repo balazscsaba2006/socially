@@ -10,7 +10,6 @@ enabled:
 disabled:
     - concat_without_spaces
     - trailing_comma_in_multiline_array
-    - not_operator_with_space
 
 finder:
     path:
