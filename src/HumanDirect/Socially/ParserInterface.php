@@ -25,7 +25,8 @@ interface ParserInterface extends NormalizableInterface
     public const PLATFORM_QUORA = 'quora';
 
     public const FACEBOOK_URL_REGEXS = [
-        'http(s)?://(www\.)?(facebook|fb)\.com/[A-z0-9_\-\.]+/?',
+        'http(s)?:\/\/(www\.)?(facebook|fb)\.com/[A-z0-9_\-\.]+/?',
+        'http(s)?:\/\/(www\.)?(facebook|fb)\.com/(people\/_\/|profile\.php?id=)/\d+/?'
     ];
 
     public const GITHUB_URL_REGEXS = [
@@ -33,9 +34,12 @@ interface ParserInterface extends NormalizableInterface
     ];
 
     public const LINKEDIN_URL_REGEXS = [
+        // private
         'http(s)?://([\w]+\.)?linkedin\.com/profile/view\?id=[A-z0-9_\-]+',
         'http(s)?:\/\/([\w]+\.)?linkedin\.com\/in\/[\x00A0-\xD7FF\xF900-\xFDCF\xFDF0-\xFFEF\-\%]+\/?',
-        'http(s)?:\/\/([\w]+\.)?linkedin\.com\/pub\/[\x00A0-\xD7FF\xF900-\xFDCF\xFDF0-\xFFEF\-\%]+(\/[A-z0-9]+){3}\/?'
+        'http(s)?:\/\/([\w]+\.)?linkedin\.com\/pub\/[\x00A0-\xD7FF\xF900-\xFDCF\xFDF0-\xFFEF\-\%]+(\/[A-z0-9]+){3}\/?',
+        // companies
+        'http(s)?://(www\.)?linkedin\.com/company/[A-z0-9_-]+/?'
     ];
 
     public const TWITTER_URL_REGEXS = [

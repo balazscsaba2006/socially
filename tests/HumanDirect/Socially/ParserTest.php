@@ -184,6 +184,11 @@ class ParserTest extends TestCase
             ['https://ro.linkedin.com/pub/ciprian-cetera%C8%99/53/24b/481', 'https://linkedin.com/pub/ciprian-ceteraș/53/24b/481'],
             ['https://ro.linkedin.com/pub/ciprian-ceteraș/53/24b/481', 'https://linkedin.com/pub/ciprian-ceteraș/53/24b/481'],
             ['https://ro.linkedin.com/in/ciprian-ceteraș/', 'https://linkedin.com/in/ciprian-ceteraș'],
+            ['http://www.facebook.com/people/_/100000049946330', 'https://facebook.com/people/_/100000049946330'],
+            ['http://www.facebook.com/profile.php?id=1294422029', 'https://facebook.com/profile.php?id=1294422029'],
+            ['http://www.fb.com/profile.php?id=1294422029', 'https://facebook.com/profile.php?id=1294422029'],
+            ['https://www.linkedin.com/in/csaba-balazs-64b65320/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_people%3BPx2eriH%2FSVuZyi9fl7ipiA%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_flagship3_search_srp_people-search_srp_result#some-fragment', 'https://linkedin.com/in/csaba-balazs-64b65320/'],
+            ['https://www.linkedin.com/profile/view?id=202583639', 'https://linkedin.com/profile/view?id=202583639']
         ];
     }
 }
