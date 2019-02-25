@@ -27,7 +27,7 @@ class StaticTest extends TestCase
     public function getIsSocialMediaProfileUrls(): array
     {
         // use the exact same provider as for the ParserTest
-        return call_user_func([ParserTest::class, 'getIsSocialMediaProfileUrls']);
+        return call_user_func([new ParserTest(), 'getIsSocialMediaProfileUrls']);
     }
 
     /**
@@ -48,6 +48,6 @@ class StaticTest extends TestCase
     public function getNormalizeUrls(): array
     {
         // use the exact same provider as for the ParserTest
-        return call_user_func([ParserTest::class, 'getNormalizeUrls']);
+        return call_user_func([new ParserTest(), 'getNormalizeUrls']);
     }
 }

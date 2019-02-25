@@ -49,36 +49,11 @@ class DefaultNormalizer implements NormalizerInterface
     public function afterNormalization(string $url): string
     {
         if (true === $this->stripSubdomain) {
-            $tldExtractor = Factory::createTldExtractor();
-            $result = $tldExtractor->parse($url);
-            $subdomain = $result->getSubdomain();
-
-            if (null === $subdomain) {
-                return $url;
-            }
-
-            $url = str_replace($subdomain . '.', '', $url);
+            $url = $this->cleanSubdomain($url);
         }
 
         if (true === $this->stripQueryStrings) {
-            if (empty($this->allowedQueryParams)) {
-                $url = strtok($url, '?');
-            } else {
-                // first remove fragments from URL
-                $url = strtok($url, '#');
-                $query = parse_url($url, PHP_URL_QUERY);
-
-                if (null !== $query) {
-                    parse_str($query, $params);
-                    foreach ($params as $paramKey => $paramValue) {
-                        if (!\in_array($paramKey, $this->allowedQueryParams, true)) {
-                            unset($params[$paramKey]);
-                        }
-                    }
-
-                    $url = strtok($url, '?') . (\count($params) ? '?' . http_build_query($params) : '');
-                }
-            }
+            $url = $this->cleanQueryString($url);
         }
 
         return $url;
@@ -112,5 +87,55 @@ class DefaultNormalizer implements NormalizerInterface
     protected function cleanUrl(string $url): string
     {
         return rtrim(Util::cleanUrl($url), '/');
+    }
+
+    /**
+     * @param string $url
+     *
+     * @throws \LayerShifter\TLDExtract\Exceptions\RuntimeException
+     *
+     * @return string
+     */
+    private function cleanSubdomain(string $url): string
+    {
+        $tldExtractor = Factory::createTldExtractor();
+        $result = $tldExtractor->parse($url);
+        $subdomain = $result->getSubdomain();
+
+        if (null === $subdomain) {
+            return $url;
+        }
+
+        return str_replace($subdomain . '.', '', $url);
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    private function cleanQueryString(string $url): string
+    {
+        // all query params and fragments have to be removed
+        if (empty($this->allowedQueryParams)) {
+            return strtok($url, '?');
+        }
+
+        // first remove fragments from URL
+        $url = strtok($url, '#');
+        $query = parse_url($url, PHP_URL_QUERY);
+
+        if (null === $query) {
+            return $url;
+        }
+
+        parse_str($query, $params);
+        foreach ($params as $paramKey => $paramValue) {
+            if (!\in_array($paramKey, $this->allowedQueryParams, true)) {
+                unset($params[$paramKey]);
+            }
+        }
+
+        return strtok($url, '?') . (\count($params) ? '?' . http_build_query($params) : '');
     }
 }

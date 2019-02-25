@@ -102,9 +102,9 @@ class ParserTest extends TestCase
 
             // not supported social media URLs
             ['https://subdomain.wordpress.com', false],
-            ['https://www.linkedin.com/company/human-direct-romania/', false],
 
             // supported social media URLs
+            ['https://www.linkedin.com/company/human-direct-romania/', true],
             ['http://www.facebook.com/profile.php?id=100000640285573', true],
             ['http://github.com/balazscsaba2006', true],
             ['http://github.com/BALAZSCSABA2006', true],
