@@ -8,7 +8,7 @@ namespace HumanDirect\Socially\Normalizer;
 class FacebookNormalizer extends DefaultNormalizer
 {
     /**
-     * Replace fb.com domain with facebook.com
+     * Replace fb.com domain with facebook.com.
      *
      * {@inheritdoc}
      */
