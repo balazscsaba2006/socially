@@ -43,7 +43,8 @@ interface ParserInterface extends NormalizableInterface
     ];
 
     public const TWITTER_URL_REGEXS = [
-        'http(s)?://(.*\.)?twitter\.com\/[A-z0-9_]+/?',
+        'http(s)?://(.*\.)?twitter\.com\/\@?[A-z0-9_]+/?',
+        'http(s)?://(.*\.)?twitter\.com\/\#\!\/[A-z0-9_]+/?',
     ];
 
     public const ANGELLIST_URL_REGEXS = [
