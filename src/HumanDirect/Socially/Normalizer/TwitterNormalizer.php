@@ -3,9 +3,9 @@
 namespace HumanDirect\Socially\Normalizer;
 
 /**
- * Class FacebookNormalizer.
+ * Class TwitterNormalizer.
  */
-class FacebookNormalizer extends DefaultNormalizer
+class TwitterNormalizer extends DefaultNormalizer
 {
     /**
      * Replace fb.com domain with facebook.com.
@@ -15,9 +15,9 @@ class FacebookNormalizer extends DefaultNormalizer
     public function afterNormalization(string $url): string
     {
         $url = parent::afterNormalization($url);
-        $url = str_replace('fb.com', 'facebook.com', $url);
 
-        $url = str_replace(['.com/sharer.php', '.com/sharer/sharer.php'], '.com', $url);
+        // strip @ and #! from the URL, eg. twitter.com/@HumanDirectEU becomes twitter.com/HumanDirectEU
+        $url = str_replace(['.com/@', '.com/#!/', '.com/share'], '.com/', $url);
 
         return rtrim($url, '/');
     }

@@ -128,6 +128,8 @@ class ParserTest extends TestCase
             ['http://www.reddit.com/user/balazscsaba2006', true],
             ['http://www.quora.com/profile/balazscsaba-2006', true],
             ['http://www.quora.com/balazscsaba-2006', true],
+            //['https://facebook.com/sharer.php', false],
+            //['https://twitter.com/share', false],
         ];
     }
 
@@ -188,7 +190,36 @@ class ParserTest extends TestCase
             ['http://www.facebook.com/profile.php?id=1294422029', 'https://facebook.com/profile.php?id=1294422029'],
             ['http://www.fb.com/profile.php?id=1294422029', 'https://facebook.com/profile.php?id=1294422029'],
             ['https://www.linkedin.com/in/csaba-balazs-64b65320/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_people%3BPx2eriH%2FSVuZyi9fl7ipiA%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_flagship3_search_srp_people-search_srp_result#some-fragment', 'https://linkedin.com/in/csaba-balazs-64b65320/'],
-            ['https://www.linkedin.com/profile/view?id=202583639', 'https://linkedin.com/profile/view?id=202583639']
+            ['https://www.linkedin.com/profile/view?id=202583639', 'https://linkedin.com/profile/view?id=202583639'],
+
+            ['http://www.twitter.com/codeschool/dasd?dsadasd', 'https://twitter.com/codeschool/dasd'],
+            ['https://www.twitter.com/codeschool?dasdad', 'https://twitter.com/codeschool'],
+            ['https://www.twitter.com/Codeschool?dasdad', 'https://twitter.com/codeschool'],
+            ['https://twitter.com/codeschool?dasdad', 'https://twitter.com/codeschool'],
+            ['https://twitter.com/#!/HumanDirectEU?dasdad', 'https://twitter.com/humandirecteu'],
+            ['https://twitter.com/@HumanDirectEU?dasdad', 'https://twitter.com/humandirecteu'],
+            ['https://twitter.com/code_school', 'https://twitter.com/code_school'],
+            ['https://twitter.com/greentextbooks#', 'https://twitter.com/greentextbooks'],
+            ['https://twitter.com/shopbop#cs=ov=73421773243,os=1,link=footerconnecttwitterlink\',', 'https://twitter.com/shopbop'],
+            ['https://twitter.com/share', 'https://twitter.com'],
+//
+            ['https://www.facebook.com/dizzain/?pnref=lhc', 'https://facebook.com/dizzain'],
+            ['http://www.facebook.com/dizzain?pnref=lhc', 'https://facebook.com/dizzain'],
+            ['http://facebook.com/dizzain?pnref=lhc', 'https://facebook.com/dizzain'],
+            ['https://facebook.com/dizzain?pnref=lhc', 'https://facebook.com/dizzain'],
+            ['https://facebook.com/Dizzain?pnref=lhc', 'https://facebook.com/dizzain'],
+            ['https://www.facebook.com/pages/fasdfadsfasdfsadf/126287147568059?pnref=lhc', 'https://facebook.com/pages/fasdfadsfasdfsadf/126287147568059'],
+            ['https://www.facebook.com/PHPtoday-1025912177431644/?fref=ts', 'https://facebook.com/phptoday-1025912177431644'],
+            ['http://www.facebook.com/pages/The-bloomtrigger-project/125218650866978/path?asdas', 'https://facebook.com/pages/the-bloomtrigger-project/125218650866978/path'],
+            ['http://www.facebook.com/pages/DealMarket/157833714232772', 'https://facebook.com/pages/dealmarket/157833714232772'],
+            // not a valid usage ['http://www.facebook.com/#!/pages/dealmarket/157833714232772', 'https://facebook.com/pages/dealmarket/157833714232772'],
+            // not a valid usage ['http://www.facebook.com/home.php?tests#!/pages/dealmarket/157833714232772', 'https://facebook.com/pages/dealmarket/157833714232772'],
+            ['http://www.facebook.com/pages/san-diego-ca/layer3-security-services/207635209271099', 'https://facebook.com/pages/san-diego-ca/layer3-security-services/207635209271099'],
+            ['http://www.facebook.com/pages/agility+inc./114838698562760', 'https://facebook.com/pages/agility+inc./114838698562760'],
+            ['http://www.facebook.com/pages/karen-mali-m%c3%bc%c5%9favirlik-logo-muhasebe/194296120603783', 'https://facebook.com/pages/karen-mali-müşavirlik-logo-muhasebe/194296120603783'],
+            ['http://www.facebook.com/pages/custom-case-guy/1445342082363874', 'https://facebook.com/pages/custom-case-guy/1445342082363874'],
+            ['https://www.facebook.com/sharer/sharer.php?u=asdasd', 'https://facebook.com'],
+            ['https://www.facebook.com/sharer.php?u=asdasd', 'https://facebook.com'],
         ];
     }
 }

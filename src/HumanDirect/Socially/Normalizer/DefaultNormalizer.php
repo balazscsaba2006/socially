@@ -121,6 +121,9 @@ class DefaultNormalizer implements NormalizerInterface
             return strtok($url, '?');
         }
 
+        // replace shebang/hashbang with temporary placeholder
+        $url = str_replace('#!', '`hashbang`', $url);
+
         // first remove fragments from URL
         $url = strtok($url, '#');
         $query = parse_url($url, PHP_URL_QUERY);
@@ -135,6 +138,9 @@ class DefaultNormalizer implements NormalizerInterface
                 unset($params[$paramKey]);
             }
         }
+
+        // revert shebang/hashbang placeholder
+        $url = str_replace('`hashbang`', '#!', $url);
 
         return strtok($url, '?') . (\count($params) ? '?' . http_build_query($params) : '');
     }
