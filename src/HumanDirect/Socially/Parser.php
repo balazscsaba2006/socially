@@ -2,6 +2,7 @@
 
 namespace HumanDirect\Socially;
 
+use FilesystemIterator;
 use HumanDirect\Socially\Normalizer\DefaultNormalizer;
 use HumanDirect\Socially\Normalizer\NormalizerInterface;
 
@@ -13,7 +14,7 @@ class Parser implements ParserInterface
     /**
      * @var NormalizerInterface[]
      */
-    private $normalizers;
+    private array $normalizers;
 
     /**
      * {@inheritdoc}
@@ -24,7 +25,7 @@ class Parser implements ParserInterface
             throw new NotSupportedException('Supplied URL is not a social media profile URL.');
         }
 
-        return Result::createFromUrl($url);
+        return Result::create($url);
     }
 
     /**
@@ -32,7 +33,7 @@ class Parser implements ParserInterface
      */
     public function normalize(string $url): string
     {
-        if (null === $this->normalizers) {
+        if (!isset($this->normalizers)) {
             $this->loadNormalizers();
         }
 
@@ -89,7 +90,7 @@ class Parser implements ParserInterface
         $normalizerNS = '\\HumanDirect\\Socially\\Normalizer\\';
         $directory = new \RecursiveDirectoryIterator(
             __DIR__ . '/Normalizer',
-            \RecursiveDirectoryIterator::SKIP_DOTS
+            FilesystemIterator::SKIP_DOTS
         );
         $files = new \RecursiveCallbackFilterIterator($directory, function ($current, $key, $iterator) use ($normalizerNS) {
             $className = str_replace('.php', '', $current->getFilename());
@@ -112,10 +113,6 @@ class Parser implements ParserInterface
 
     /**
      * Get a normalizer for a specific platform or a default normalizer.
-     *
-     * @param string $platform
-     *
-     * @return NormalizerInterface
      */
     private function getNormalizer(string $platform): NormalizerInterface
     {

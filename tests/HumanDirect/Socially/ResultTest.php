@@ -2,10 +2,7 @@
 
 namespace Tests\HumanDirect\Socially;
 
-use HumanDirect\Socially\Factory;
 use HumanDirect\Socially\Result;
-use LayerShifter\TLDExtract\Extract;
-use LayerShifter\TLDExtract\Result as TldResult;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,106 +11,69 @@ use PHPUnit\Framework\TestCase;
 class ResultTest extends TestCase
 {
     /**
-     * @var Extract
-     */
-    private $extract;
-
-    /**
      * Object for tests.
-     *
-     * @var Result
      */
-    private $entity;
+    private Result $entity;
 
     /**
      * Method that setups test's environment.
-     *
-     * @return void
-     * @throws \LayerShifter\TLDExtract\Exceptions\RuntimeException
      */
-    public function setUp()
+    public function setUp(): void
     {
-        $this->extract = Factory::createTldExtractor();
-        $this->entity = new Result(new TldResult(null, '192.168.0.1', null));
+        $this->entity = Result::create('192.168.0.1');
     }
 
     /**
      * Test for __constructor.
-     *
-     * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
-        static::assertNull($this->entity->subdomain);
-        static::assertEquals('192.168.0.1', $this->entity->hostname);
-        static::assertNull($this->entity->suffix);
+        static::assertNull($this->entity->getSubdomain());
+        static::assertEquals('192.168.0.1', $this->entity->getHostname());
+        static::assertNull($this->entity->getSuffix());
 
-        $entity = new Result(new TldResult(null, 'domain', 'com'));
+        $entity = Result::create('domain.com');
 
-        static::assertNull($this->entity->subdomain);
-        static::assertEquals('domain', $entity->hostname);
-        static::assertEquals('com', $entity->suffix);
+        static::assertNull($this->entity->getSubdomain());
+        static::assertEquals('domain', $entity->getHostname());
+        static::assertEquals('com', $entity->getSuffix());
 
-        unset($entity);
+        $entity = Result::create('www.news.domain.com');
 
-        $entity = new Result(new TldResult('www.news', 'domain', 'com'));
-
-        static::assertEquals('www.news', $entity->subdomain);
+        static::assertEquals('www.news', $entity->getSubdomain());
         static::assertEquals(['www', 'news'], $entity->getSubdomains());
-        static::assertEquals('domain', $entity->hostname);
-        static::assertEquals('com', $entity->suffix);
+        static::assertEquals('domain', $entity->getHostname());
+        static::assertEquals('com', $entity->getSuffix());
         static::assertEquals('www.news.domain.com', $entity->getFullHost());
         static::assertEquals('domain.com', $entity->getRegistrableDomain());
 
-        static::assertArrayHasKey('subdomain', $entity);
-        static::assertArrayHasKey('hostname', $entity);
-        static::assertArrayHasKey('suffix', $entity);
-    }
-
-    /**
-     * Test for static create.
-     *
-     * @return void
-     */
-    public function testStaticCreate()
-    {
-        $entity = Result::create('www', 'domain', 'com');
-
-        static::assertEquals('www', $entity->subdomain);
-        static::assertEquals('domain', $entity->hostname);
-        static::assertEquals('com', $entity->suffix);
-
-        static::assertArrayHasKey('subdomain', $entity);
-        static::assertArrayHasKey('hostname', $entity);
-        static::assertArrayHasKey('suffix', $entity);
+        static::assertArrayHasKey('subdomain', $entity->toArray());
+        static::assertArrayHasKey('hostname', $entity->toArray());
+        static::assertArrayHasKey('suffix', $entity->toArray());
     }
 
     /**
      * Test for static createFromUrl.
-     *
-     * @return void
      */
-    public function testStaticCreateFromUrl()
+    public function testStaticCreateFromUrl(): void
     {
-        $entity = Result::createFromUrl('https://www.linkedin.com/in/csaba-balazs-64b65320/');
+        $entity = Result::create('https://www.linkedin.com/in/csaba-balazs-64b65320/');
 
-        static::assertEquals('www', $entity->subdomain);
-        static::assertEquals('linkedin', $entity->hostname);
-        static::assertEquals('com', $entity->suffix);
+        static::assertEquals('www', $entity->getSubdomain());
+        static::assertEquals('linkedin', $entity->getHostname());
+        static::assertEquals('com', $entity->getSuffix());
 
-        static::assertArrayHasKey('subdomain', $entity);
-        static::assertArrayHasKey('hostname', $entity);
-        static::assertArrayHasKey('suffix', $entity);
+        static::assertArrayHasKey('subdomain', $entity->toArray());
+        static::assertArrayHasKey('hostname', $entity->toArray());
+        static::assertArrayHasKey('suffix', $entity->toArray());
     }
 
     /**
      * Test domain entry.
-     *
-     * @return void
      */
-    public function testDomain()
+    public function testDomain(): void
     {
-        $result = $this->extract->parse('github.com');
+        $result = Result::create('github.com');
 
         static::assertEquals('github.com', $result->getFullHost());
         static::assertEquals(null, $result->getSubdomain());
@@ -125,12 +85,10 @@ class ResultTest extends TestCase
 
     /**
      * Test subdomain entry.
-     *
-     * @return void
      */
-    public function testSubDomain()
+    public function testSubDomain(): void
     {
-        $result = $this->extract->parse('shop.github.com');
+        $result = Result::create('shop.github.com');
 
         static::assertEquals('shop.github.com', $result->getFullHost());
         static::assertEquals('shop', $result->getSubdomain());
@@ -143,138 +101,27 @@ class ResultTest extends TestCase
     }
 
     /**
-     * Test subdomain entries.
-     *
-     * @return void
-     */
-    public function testSubdomains()
-    {
-        $result = $this->extract->parse('new.shop.github.com');
-
-        static::assertEquals('new.shop.github.com', $result->getFullHost());
-        static::assertEquals('new.shop', $result->getSubdomain());
-        static::assertCount(2, $result->getSubdomains());
-        static::assertContainsOnly('string', $result->getSubdomains());
-        static::assertEquals(['new', 'shop'], $result->getSubdomains());
-        static::assertEquals('github.com', $result->getRegistrableDomain());
-        static::assertTrue($result->isValidDomain());
-        static::assertFalse($result->isIp());
-    }
-
-    /**
      * Test for toJson().
      *
-     * @return void
+     * @throws \JsonException
      */
-    public function testToJson()
+    public function testToJson(): void
     {
         static::assertJsonStringEqualsJsonString(
             json_encode((object)[
                 'subdomain' => null,
-                'hostname'  => '192.168.0.1',
-                'suffix'    => null,
-            ]),
+                'hostname' => '192.168.0.1',
+                'suffix' => null,
+            ], JSON_THROW_ON_ERROR),
             $this->entity->toJson()
         );
     }
 
     /**
      * Test for magic method __toString().
-     *
-     * @return void
      */
-    public function testToString()
+    public function testToString(): void
     {
         static::assertEquals('192.168.0.1', (string) $this->entity);
-    }
-
-    /**
-     * Test for magic method __isset().
-     *
-     * @return void
-     */
-    public function testIsset()
-    {
-        static::assertNull($this->entity->subdomain);
-        static::assertNotNull($this->entity->hostname);
-        static::assertNull($this->entity->suffix);
-
-        /* @noinspection PhpUndefinedFieldInspection
-         * Test for not existing field
-         */
-        static::assertEquals(false, isset($this->entity->test));
-    }
-
-    /**
-     * Test for magic method __set().
-     *
-     * @expectedException \LogicException
-     *
-     * @return void
-     */
-    public function testSet()
-    {
-        $this->entity->offsetSet('hostname', 'another-domain');
-    }
-
-    /**
-     * Test for magic method __set().
-     *
-     * @expectedException \LogicException
-     *
-     * @return void
-     */
-    public function testSetViaProperty()
-    {
-        $this->entity->hostname = 'another-domain';
-    }
-
-    /**
-     * Test for magic method __get().
-     *
-     * @expectedException \OutOfRangeException
-     *
-     * @return void
-     */
-    public function testGet()
-    {
-        /* @noinspection PhpUndefinedFieldInspection
-         * Test for not existing field
-         */
-        $this->entity->hostname1;
-    }
-
-    /**
-     * Test for magic method __offsetSet().
-     *
-     * @expectedException \LogicException
-     *
-     * @return void
-     */
-    public function testOffsetSet()
-    {
-        $this->entity['hostname'] = 'another-domain';
-    }
-
-    /**
-     * Test for magic method __offsetGet().
-     *
-     * @return void
-     */
-    public function testOffsetGet()
-    {
-        static::assertEquals('192.168.0.1', $this->entity['hostname']);
-    }
-
-    /**
-     * Test for magic method __offsetUnset().
-     *
-     * @expectedException \LogicException
-     *
-     * @return void
-     */
-    public function testOffsetUnset()
-    {
-        unset($this->entity['hostname']);
     }
 }

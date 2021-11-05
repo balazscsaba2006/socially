@@ -10,9 +10,6 @@ use PHPUnit\Framework\TestCase;
  */
 class UtilTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testToCamelCase(): void
     {
         static::assertEquals('Platform', Util::toCamelCase('platform'));
@@ -23,18 +20,12 @@ class UtilTest extends TestCase
         static::assertEquals('', Util::toCamelCase(''));
     }
 
-    /**
-     * @return void
-     */
     public function testIsValidUrl(): void
     {
         static::assertEquals(false, Util::isValidUrl(''));
         static::assertEquals(true, Util::isValidUrl('  http://github.com/BALAZSCSABA2006/ '));
     }
 
-    /**
-     * @return void
-     */
     public function testCleanUrl(): void
     {
         static::assertEquals('', Util::cleanUrl(''));

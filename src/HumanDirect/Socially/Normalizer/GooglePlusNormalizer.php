@@ -7,8 +7,5 @@ namespace HumanDirect\Socially\Normalizer;
  */
 class GooglePlusNormalizer extends DefaultNormalizer
 {
-    /**
-     * @var bool
-     */
-    protected $stripSubdomain = false;
+    protected bool $stripSubdomain = false;
 }

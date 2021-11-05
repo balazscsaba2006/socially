@@ -2,37 +2,20 @@
 
 namespace HumanDirect\Socially\Normalizer;
 
-use HumanDirect\Socially\Factory;
 use HumanDirect\Socially\Util;
+use Utopia\Domains\Domain;
 
 /**
  * Class DefaultNormalizer.
  */
 class DefaultNormalizer implements NormalizerInterface
 {
-    /**
-     * @var bool
-     */
-    protected $stripSubdomain = true;
-
-    /**
-     * @var bool
-     */
-    protected $stripQueryStrings = true;
-
-    /**
-     * @var array
-     */
-    protected $allowedQueryParams = [
-        'id'
-    ];
+    protected bool $stripSubdomain = true;
+    protected bool $stripQueryStrings = true;
+    protected array $allowedQueryParams = ['id'];
 
     /**
      * Normalize a URL.
-     *
-     * @param string $url
-     *
-     * @return string
      */
     public function normalize(string $url): string
     {
@@ -43,9 +26,6 @@ class DefaultNormalizer implements NormalizerInterface
         return $this->afterNormalization($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function afterNormalization(string $url): string
     {
         if (true === $this->stripSubdomain) {
@@ -67,11 +47,6 @@ class DefaultNormalizer implements NormalizerInterface
         return $this->getName() === Util::toCamelCase($platform);
     }
 
-    /**
-     * @throws \ReflectionException
-     *
-     * @return string
-     */
     protected function getName(): string
     {
         $shortName = (new \ReflectionClass($this))->getShortName();
@@ -79,41 +54,19 @@ class DefaultNormalizer implements NormalizerInterface
         return substr($shortName, 0, -10);
     }
 
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
     protected function cleanUrl(string $url): string
     {
         return rtrim(Util::cleanUrl($url), '/');
     }
 
-    /**
-     * @param string $url
-     *
-     * @throws \LayerShifter\TLDExtract\Exceptions\RuntimeException
-     *
-     * @return string
-     */
     private function cleanSubdomain(string $url): string
     {
-        $tldExtractor = Factory::createTldExtractor();
-        $result = $tldExtractor->parse($url);
-        $subdomain = $result->getSubdomain();
+        $domain = new Domain(parse_url($url, PHP_URL_HOST));
+        $subdomain = $domain->getSub();
 
-        if (null === $subdomain) {
-            return $url;
-        }
-
-        return str_replace($subdomain . '.', '', $url);
+        return !empty($subdomain) ? str_replace($subdomain . '.', '', $url) : $url;
     }
 
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
     private function cleanQueryString(string $url): string
     {
         // all query params and fragments have to be removed

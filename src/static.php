@@ -1,35 +1,25 @@
 <?php
 
 namespace {
-    use HumanDirect\Socially\Factory;
+    use HumanDirect\Socially\Parser;
 
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
     function socially_isSocialMediaProfile(string $url): bool
     {
         static $parser = null;
 
         if (null === $parser) {
-            $parser = Factory::createParser();
+            $parser = new Parser();
         }
 
         return $parser->isSocialMediaProfile($url);
     }
 
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
     function socially_normalize(string $url): string
     {
         static $parser = null;
 
         if (null === $parser) {
-            $parser = Factory::createParser();
+            $parser = new Parser();
         }
 
         return $parser->normalize($url);

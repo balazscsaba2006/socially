@@ -9,10 +9,5 @@ use HumanDirect\Socially\NormalizableInterface;
  */
 interface NormalizerInterface extends NormalizableInterface, SupportsNormalizerInterface
 {
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
     public function afterNormalization(string $url): string;
 }

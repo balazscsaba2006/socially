@@ -11,9 +11,6 @@ class StaticTest extends TestCase
 {
     /**
      * @dataProvider getIsSocialMediaProfileUrls
-     *
-     * @param string $url
-     * @param bool   $expected
      */
     public function testSociallyIsSocialMediaProfile(string $url, bool $expected): void
     {
@@ -22,9 +19,9 @@ class StaticTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return iterable<string, bool>
      */
-    public function getIsSocialMediaProfileUrls(): array
+    public function getIsSocialMediaProfileUrls(): iterable
     {
         // use the exact same provider as for the ParserTest
         return call_user_func([new ParserTest(), 'getIsSocialMediaProfileUrls']);
@@ -32,9 +29,6 @@ class StaticTest extends TestCase
 
     /**
      * @dataProvider getNormalizeUrls
-     *
-     * @param string $url
-     * @param string $expected
      */
     public function testSociallyNormalize(string $url, string $expected): void
     {
@@ -43,9 +37,9 @@ class StaticTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return iterable<string, string>
      */
-    public function getNormalizeUrls(): array
+    public function getNormalizeUrls(): iterable
     {
         // use the exact same provider as for the ParserTest
         return call_user_func([new ParserTest(), 'getNormalizeUrls']);

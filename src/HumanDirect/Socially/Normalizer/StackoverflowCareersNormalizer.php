@@ -7,8 +7,5 @@ namespace HumanDirect\Socially\Normalizer;
  */
 class StackoverflowCareersNormalizer extends DefaultNormalizer
 {
-    /**
-     * @var bool
-     */
-    protected $stripSubdomain = false;
+    protected bool $stripSubdomain = false;
 }

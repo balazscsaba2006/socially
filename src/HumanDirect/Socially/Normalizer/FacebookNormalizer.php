@@ -15,9 +15,11 @@ class FacebookNormalizer extends DefaultNormalizer
     public function afterNormalization(string $url): string
     {
         $url = parent::afterNormalization($url);
-        $url = str_replace('fb.com', 'facebook.com', $url);
-
-        $url = str_replace(['.com/sharer.php', '.com/sharer/sharer.php'], '.com', $url);
+        $url = str_replace(
+            ['fb.com', '.com/sharer.php', '.com/sharer/sharer.php'],
+            ['facebook.com', '.com', '.com'],
+            $url
+        );
 
         return rtrim($url, '/');
     }
